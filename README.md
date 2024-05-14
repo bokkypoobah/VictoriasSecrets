@@ -1,4 +1,4 @@
-# Victorias Secrets
+# Victoria's Secrets
 
 **Work in Progress** - [Online:VictoriasSecrets](https://bokkypoobah.github.io/VictoriasSecrets/online.html), [Offline:VictoriasSecrets](https://bokkypoobah.github.io/VictoriasSecrets/offline.html) and [WalletTool:VictoriasSecrets](https://bokkypoobah.github.io/VictoriasSecrets/wallettool.html).
 
@@ -21,4 +21,4 @@ Moved to [FAQs.md](FAQs.md).
 
 Enjoy!
 
-© Bok Consulting Pty Ltd 2024, CC0-1.0 license
+© Bok Consulting Pty Ltd 2024, MIT license
