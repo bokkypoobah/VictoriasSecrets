@@ -25,6 +25,7 @@
     <script src="chains.js"></script>
     <script src="deploymentData.js"></script>
     <script src="datatxmap.js"></script>
+    <script src="datatransfer.js"></script>
 
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -251,7 +252,7 @@
                   <b-form-input type="text" size="sm" readonly id="address-privatekey" v-model.trim="address.privateKey"></b-form-input>
                 </div>
                 <div class="mt-0 pr-1">
-                  <b-button size="sm" @click="showViewQRCode('Keystore', JSON.stringify(address.keystore, null, 2))" variant="transparent" v-b-popover.hover.bottom="'View Keystore QR Code'">
+                  <b-button size="sm" @click="showViewQRCode('Keystore', address.keystore)" variant="transparent" v-b-popover.hover.bottom="'View Keystore QR Code'">
                     <b-img width="16" src="images/qr-code.svg" class="m-0 mb-1 p-0"></b-img>
                     </b-img>
                   </b-button>
@@ -384,6 +385,13 @@
             <!-- :SIGNETHTX -->
             <b-card sub-title="Sign Transaction" bg-variant="light" class="p-0 m-1" style="max-width: 900px;">
               <b-form-group label-cols-lg="2" label="Input" label-size="md" label-class="font-weight-bold pt-0" class="mb-0 mt-3">
+
+                <b-form-group label="Scan QR Code:" label-for="signethtx-scanqrcode" label-size="sm" label-cols-sm="3" label-align-sm="right" class="mx-0 my-1 p-0">
+                  <b-button size="sm" @click="showScanQRCode('Address')" variant="link" v-b-popover.hover.bottom="'Scan QR Code'">
+                    <b-img width="18" src="images/qr-code-scan.svg" class="m-0 mb-1 p-0"></b-img>
+                    </b-img>
+                  </b-button>
+                </b-form-group>
 
                 <b-form-group label="Load .JSON:" label-for="signethtx-loadjson" label-size="sm" label-cols-sm="3" label-align-sm="right" :description="'Select .json file from your local computer to restore'" class="mx-0 my-1 p-0">
                   <b-form-file size="sm" id="signethtx-loadjson" v-model="loadTxFile" @change="loadJSON($event.target.name, $event.target.files)" accept=".json" class="w-75"></b-form-file>
@@ -1048,7 +1056,8 @@
           showViewQRCode(type, data) {
             console.log(moment().format("HH:mm:ss") + " showViewQRCode - type: " + type + ", data: '" + data + "'");
             this.qrCode.type = type;
-            this.qrCode.data = data;
+            this.qrCode.data = dataToTransfer(type, data);
+            console.log(moment().format("HH:mm:ss") + " showViewQRCode - this.qrCode: " + JSON.stringify(this.qrCode));
             this.$bvModal.show('modal-viewqrcode');
           },
           showScanQRCode(type) {
