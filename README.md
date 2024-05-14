@@ -6,15 +6,6 @@
   <img height="150" src="https://raw.githubusercontent.com/bokkypoobah/VictoriasSecrets/main/images/victoriassecrets.png" />
 </p>
 
-
-<br />
-
----
-
-## FAQs
-
-Moved to [FAQs.md](FAQs.md).
-
 <br />
 
 <br />
