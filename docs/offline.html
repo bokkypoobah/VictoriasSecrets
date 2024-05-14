@@ -953,13 +953,13 @@
             return results;
           },
           pagedFilteredSortedAddresses() {
-            console.log(moment().format("HH:mm:ss") + " pagedFilteredSortedAddresses - results[0..1]: " + JSON.stringify(this.filteredSortedAddresses.slice(0, 2), null, 2));
+            // console.log(moment().format("HH:mm:ss") + " pagedFilteredSortedAddresses - results[0..1]: " + JSON.stringify(this.filteredSortedAddresses.slice(0, 2), null, 2));
             return this.filteredSortedAddresses.slice((this.settings.addressesTable.currentPage - 1) * this.settings.addressesTable.pageSize, this.settings.addressesTable.currentPage * this.settings.addressesTable.pageSize);
           },
 
           signEthTxDataCheck() {
             let error = null;
-            console.log(moment().format("HH:mm:ss") + " signEthTxDataCheck");
+            // console.log(moment().format("HH:mm:ss") + " signEthTxDataCheck");
             if (!this.settings.signEthTx.action) {
               error = "Select Action";
             }
@@ -1510,7 +1510,7 @@
           // console.log("this.chains: " + JSON.stringify(this.chains, null, 2));
           if ('victoriasSecretsOfflineAddresses' in localStorage) {
             this.addresses = JSON.parse(localStorage.victoriasSecretsOfflineAddresses);
-            console.log("this.addresses: " + JSON.stringify(this.addresses, null, 2));
+            // console.log("this.addresses: " + JSON.stringify(this.addresses, null, 2));
           }
           if ('victoriasSecretsOfflineSettings' in localStorage) {
             const tempSettings = JSON.parse(localStorage.victoriasSecretsOfflineSettings);
