@@ -1,4 +1,4 @@
-# Victoria's Secrets
+# Victoria's Secrets -  Royalty Class Online/Offline Wallet For EVM Chains
 
 **Work in Progress** - [Online:VictoriasSecrets](https://bokkypoobah.github.io/VictoriasSecrets/online.html), [Offline:VictoriasSecrets](https://bokkypoobah.github.io/VictoriasSecrets/offline.html) and [WalletTool:VictoriasSecrets](https://bokkypoobah.github.io/VictoriasSecrets/wallettool.html).
 
