@@ -14,6 +14,33 @@ function dataToTransfer(type, data) {
   return result;
 }
 
+
+function dataType(data) {
+  if (data) {
+    if (data.address) {
+      if (data.crypto) {
+        return "keystore";
+      } else {
+        return "address";
+      }
+    } else if (data.from) {
+      if (data.type && data.type == "2") {
+        if (data.r) {
+          return "signedtype2";
+        } else {
+          return "unsignedtype2";
+        }
+      } else {
+        if (data.r) {
+          return "signedtype1";
+        } else {
+          return "unsignedtype1";
+        }
+      }
+    }
+  }
+}
+
 function testIt() {
 
   const TESTDATALIST = [
@@ -48,7 +75,7 @@ function testIt() {
       "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
       "value": "1000000000000000000",
       "data": "0x",
-      "type": 1,
+      // "type": 1,
       "chainId": 1,
       "nonce": 1,
       "gasLimit": "1",
@@ -61,7 +88,7 @@ function testIt() {
       "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
       "value": "1000000000000000000",
       "data": "0x",
-      "type": 1,
+      // "type": 1,
       "chainId": 1,
       "nonce": 1,
       "gasLimit": "1",
@@ -109,9 +136,8 @@ function testIt() {
   ];
 
   for (const testData of TESTDATALIST) {
-    console.log(JSON.stringify(testData, null, 2));
+    console.log(dataType(testData) + ": " + JSON.stringify(testData, null, 2));
   }
-
 
   console.log("Hi hi");
 }
