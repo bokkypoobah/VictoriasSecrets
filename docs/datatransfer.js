@@ -163,6 +163,16 @@ function checkData(data) {
         errors.push("'chainId' invalid");
       }
     }
+    if (!('nonce' in data)) {
+      errors.push("'nonce' missing");
+    } else {
+      try {
+        const nonce = ethers.BigNumber.from(data.nonce);
+        console.log("nonce: " + nonce);
+      } catch (e) {
+        errors.push("'nonce' invalid");
+      }
+    }
 
   }
 
@@ -229,9 +239,13 @@ function testIt() {
       // "type": "",
       // "type": 1,
       "chainId": 1,
+      // "chainId": "1a",
       // "chainId": null,
       // "chainId": "",
       "nonce": 1,
+      // "nonce": "1a",
+      // "nonce": null,
+      // "nonce": "",
       "gasLimit": "1",
       "maxPriorityFeePerGas": "1000000000",
       "maxFeePerGas": "1000000000",
