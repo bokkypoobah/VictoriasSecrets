@@ -259,6 +259,42 @@ function checkData(data) {
       }
     }
   }
+  if (["signedtype2"].includes(type)) {
+    console.log("data: " + JSON.stringify(data, null, 2));
+
+    const tx = {
+      to: data.to.toLowerCase(),
+      value: data.value,
+      // data: (data.data == null || data.data == "" || data.data == "0x") ? null: data,
+      data: data.data,
+      nonce: data.nonce,
+      type: data.type,
+      chainId: data.chainId,
+      gasLimit: data.gasLimit,
+      maxFeePerGas: data.maxFeePerGas,
+      maxPriorityFeePerGas: data.maxPriorityFeePerGas,
+      gasPrice: null,
+      accessList: [],
+    };
+
+    const sig = {
+      r: data.r,
+      s: data.s,
+      v: data.v
+    };
+
+    console.log("tx: " + JSON.stringify(tx, null, 2));
+
+    const unsignedTx = ethers.utils.serializeTransaction(tx);
+    console.log("unsignedTx: " + JSON.stringify(unsignedTx, null, 2));
+
+    const preimage = ethers.utils.keccak256(unsignedTx);
+    console.log("Preimage: " + preimage);
+
+    // ecrecover based on the signature and the **preimage**
+    const from = ethers.utils.recoverAddress(preimage, sig);
+    console.log("from: " + preimage);
+  }
 
   console.log("checkData - type: " + type + ", errors: " + errors.join("; "));
 
@@ -350,6 +386,34 @@ function testIt() {
     //   "accessList": [],
     // },
 
+    // {
+    //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+    //   "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+    //   "value": "1000000000000000000",
+    //   "data": "0x",
+    //   "type": 2,
+    //   "chainId": 1,
+    //   "nonce": 1,
+    //   "gasLimit": "1",
+    //   "maxFeePerGas": "1000000000",
+    //   "maxPriorityFeePerGas": "1000000000",
+    //   "gasPrice": null,
+    //   "accessList": [],
+    //   // "accessList": [ "one" ],
+    //   // "accessList": "blah",
+    //   "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
+    //   // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9cef",
+    //   // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9c",
+    //   "v": 1,
+    //   // "v": "1a",
+    //   // "v": null,
+    //   // "v": "",
+    //   "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d8",
+    //   // "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d",
+    //   "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72",
+    //   // "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72e",
+    // },
+
     {
       "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
       "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
@@ -361,21 +425,12 @@ function testIt() {
       "gasLimit": "1",
       "maxFeePerGas": "1000000000",
       "maxPriorityFeePerGas": "1000000000",
-      "gasPrice": null,
+      // "gasPrice": null,
       "accessList": [],
-      // "accessList": [ "one" ],
-      // "accessList": "blah",
       "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
-      // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9cef",
-      // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9c",
       "v": 1,
-      // "v": "1a",
-      // "v": null,
-      // "v": "",
       "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d8",
-      // "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d",
       "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72",
-      // "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72e",
     },
 
   ];
