@@ -173,6 +173,36 @@ function checkData(data) {
         errors.push("'nonce' invalid");
       }
     }
+    if (!('gasLimit' in data)) {
+      errors.push("'gasLimit' missing");
+    } else {
+      try {
+        const gasLimit = ethers.BigNumber.from(data.gasLimit);
+        console.log("gasLimit: " + gasLimit);
+      } catch (e) {
+        errors.push("'gasLimit' invalid");
+      }
+    }
+    if (!('maxFeePerGas' in data)) {
+      errors.push("'maxFeePerGas' missing");
+    } else {
+      try {
+        const maxFeePerGas = ethers.BigNumber.from(data.maxFeePerGas);
+        console.log("maxFeePerGas: " + maxFeePerGas);
+      } catch (e) {
+        errors.push("'maxFeePerGas' invalid");
+      }
+    }
+    if (!('maxPriorityFeePerGas' in data)) {
+      errors.push("'maxPriorityFeePerGas' missing");
+    } else {
+      try {
+        const maxPriorityFeePerGas = ethers.BigNumber.from(data.maxPriorityFeePerGas);
+        console.log("maxPriorityFeePerGas: " + maxPriorityFeePerGas);
+      } catch (e) {
+        errors.push("'maxPriorityFeePerGas' invalid");
+      }
+    }
 
   }
 
@@ -247,8 +277,18 @@ function testIt() {
       // "nonce": null,
       // "nonce": "",
       "gasLimit": "1",
-      "maxPriorityFeePerGas": "1000000000",
+      // "gasLimit": "1a",
+      // "gasLimit": null,
+      // "gasLimit": "",
       "maxFeePerGas": "1000000000",
+      // "maxFeePerGas": "1000000000b",
+      // "maxFeePerGas": "0x1000000000b",
+      // "maxFeePerGas": null,
+      // "maxFeePerGas": "",
+      "maxPriorityFeePerGas": "1000000000",
+      // "maxPriorityFeePerGas": "1000000000a",
+      // "maxPriorityFeePerGas": null,
+      // "maxPriorityFeePerGas": "",
       "gasPrice": null,
       "accessList": [],
     },
@@ -262,8 +302,8 @@ function testIt() {
     //   "chainId": 1,
     //   "nonce": 1,
     //   "gasLimit": "1",
-    //   "maxPriorityFeePerGas": "1000000000",
     //   "maxFeePerGas": "1000000000",
+    //   "maxPriorityFeePerGas": "1000000000",
     //   "gasPrice": null,
     //   "accessList": [],
     //   "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
