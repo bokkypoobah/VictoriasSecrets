@@ -214,6 +214,15 @@ function checkData(data) {
         errors.push("'maxPriorityFeePerGas' invalid");
       }
     }
+    if (!('accessList' in data)) {
+      errors.push("'accessList' missing");
+    } else {
+      if (!Array.isArray(data.accessList)) {
+        errors.push("'accessList' is not an array");
+      } else if (data.accessList.length > 0) {
+        errors.push("'accessList' must be an empty array");
+      }
+    }
   }
   if (["signedtype2"].includes(type)) {
     if (!('hash' in data)) {
@@ -354,6 +363,8 @@ function testIt() {
       "maxPriorityFeePerGas": "1000000000",
       "gasPrice": null,
       "accessList": [],
+      // "accessList": [ "one" ],
+      // "accessList": "blah",
       "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
       // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9cef",
       // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9c",
