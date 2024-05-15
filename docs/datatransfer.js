@@ -134,6 +134,14 @@ function checkData(data) {
     } else {
       if (data.data && data.data != "" && data.data != "0x") {
         console.log("data: " + data.data);
+
+        // "data": "0xa9059cbb000000000000000000000000a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
+        //                      1         2         3         4         5         6         7         8         9        10        11        12        13
+        //            0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+        // "data": "0xa9059cbb000000000000000000000000a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
+        // if ()
+
+
       } else {
         if (!data.to || data.to == "" || data.to == "0x") {
           errors.push("'data' and/or 'to' must be specified");
@@ -263,7 +271,8 @@ function testIt() {
       "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
       "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
       "value": "1000000000000000000",
-      "data": "0x",
+      // "data": "0x",
+      "data": "0xa9059cbb000000000000000000000000a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
       "type": 2,
       // "type": null,
       // "type": "",
