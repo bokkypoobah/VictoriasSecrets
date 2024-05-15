@@ -440,7 +440,60 @@ function testIt() {
     // console.log(dataType(testData) + ": " + JSON.stringify(testData, null, 2));
   }
 
-  console.log("Hi hi");
 }
 
-testIt();
+async function testItNew() {
+  console.log("Hi hi");
+
+  const privateKey = "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d8";
+  const wallet = new ethers.Wallet(privateKey);
+  console.log("wallet: " + JSON.stringify(wallet, null, 2));
+  const tx = {
+    "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+    "value": "1000000000000000000",
+    "data": "0x",
+    "type": 2,
+    "chainId": 1,
+    "nonce": 1,
+    "gasLimit": "1",
+    "maxFeePerGas": "1000000000",
+    "maxPriorityFeePerGas": "1000000000",
+    // "gasPrice": null,
+    "accessList": [],
+  };
+  console.log("tx: " + JSON.stringify(tx, null, 2));
+  const signedTx = await wallet.signTransaction(tx);
+  console.log("signedTx: " + JSON.stringify(signedTx, null, 2));
+  const decodedSignedTx = ethers.utils.parseTransaction(signedTx);
+  console.log("decodedSignedTx: " + JSON.stringify(decodedSignedTx, bigNumberReplacer, 2));
+
+  const unsignedTx = ethers.utils.serializeTransaction(tx);
+  console.log("unsignedTx: " + JSON.stringify(unsignedTx, null, 2));
+  const preimage = ethers.utils.keccak256(unsignedTx);
+  console.log("Preimage: " + preimage);
+
+
+  // decodedSignedTx: {
+  //   "type": 2,
+  //   "chainId": 1,
+  //   "nonce": 1,
+  //   "maxPriorityFeePerGas": "1000000000",
+  //   "maxFeePerGas": "1000000000",
+  //   "gasPrice": null,
+  //   "gasLimit": "1",
+  //   "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+  //   "value": "1000000000000000000",
+  //   "data": "0x",
+  //   "accessList": [],
+  //   "hash": "0x23658ff105ee2bfd8fc0bf376b3fc0584e802691ac541a42b9800883652522bf",
+  //   "v": 1,
+  //   "r": "0x7575eed2e01190aa490e7c5db8e57addb67a84e4c2ca0a4d143f07953279078d",
+  //   "s": "0x638007fe7151cac484b9a81e4202449b0afcddb18ffd16776157e751de6ab752",
+  //   "from": "0x94D87755515a2b88BDCF098840b8065C4E6f0C53"
+  // }
+
+}
+
+
+// testIt();
+testItNew();
