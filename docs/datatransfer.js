@@ -466,12 +466,25 @@ async function testItNew() {
   console.log("signedTx: " + JSON.stringify(signedTx, null, 2));
   const decodedSignedTx = ethers.utils.parseTransaction(signedTx);
   console.log("decodedSignedTx: " + JSON.stringify(decodedSignedTx, bigNumberReplacer, 2));
-
+  const sig = {
+    v: decodedSignedTx.v,
+    r: decodedSignedTx.r,
+    s: decodedSignedTx.s,
+  };
+  console.log("sig: " + JSON.stringify(sig, null, 2));
   const unsignedTx = ethers.utils.serializeTransaction(tx);
   console.log("unsignedTx: " + JSON.stringify(unsignedTx, null, 2));
   const preimage = ethers.utils.keccak256(unsignedTx);
-  console.log("Preimage: " + preimage);
+  console.log("preimage: " + preimage);
 
+  const from = ethers.utils.recoverAddress(preimage, sig);
+  console.log("from: " + from + " vs wallet.address: " + wallet.address);
+
+  const txWithSignature = ethers.utils.serializeTransaction(tx, sig);
+  console.log("txWithSignature: ", txWithSignature);
+
+  const hashedTxWithSignature = ethers.utils.keccak256(txWithSignature);
+  console.log("hashedTxWithSignature: " + hashedTxWithSignature + " vs decodedSignedTx.hash: " + decodedSignedTx.hash);
 
   // decodedSignedTx: {
   //   "type": 2,
