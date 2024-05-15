@@ -145,12 +145,6 @@ function checkData(data) {
           errors.push("'data' and/or 'to' must be specified");
         }
       }
-      // try {
-      //   const value = ethers.BigNumber.from(data.value);
-      //   console.log("value: " + value);
-      // } catch (e) {
-      //   errors.push("'value' invalid");
-      // }
     }
 
     // {
