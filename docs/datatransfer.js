@@ -40,6 +40,7 @@ function dataType(data) {
       }
     }
   }
+  return "unknown";
 }
 
 function checkData(data) {
@@ -48,8 +49,8 @@ function checkData(data) {
   const errors = [];
   if (["address", "keystore"].includes(type)) {
     try {
-      const testAddress = ethers.utils.getAddress(data.address);
-      // console.log("testAddress: " + testAddress);
+      const address = ethers.utils.getAddress(data.address);
+      // console.log("address: " + address);
     } catch (e) {
       errors.push("'address' invalid");
     }
@@ -105,39 +106,35 @@ function checkData(data) {
     }
   }
   if (["signedtype1", "unsignedtype1", "signedtype2", "unsignedtype2"].includes(type)) {
-    // try {
-    //   const testFrom = ethers.utils.getAddress(data.from);
-    //   console.log("testFrom: " + testFrom);
-    // } catch (e) {
-    //   errors.push("'from' invalid";
-    // }
-    // if (!error) {
-    //   if (!('to' in data)) {
-    //     errors.push("'to' missing";
-    //   } else {
-    //     if (data.to) {
-    //       try {
-    //         const testTo = ethers.utils.getAddress(data.to);
-    //         console.log("testTo: " + testTo);
-    //       } catch (e) {
-    //         errors.push("'to' invalid";
-    //       }
-    //     }
-    //   }
-    // }
-    //
-    // if (!error) {
-    //   if (!('value' in data)) {
-    //     errors.push("'value' missing";
-    //   } else {
-    //     try {
-    //       const testValue = ethers.BigNumber.from(data.value);
-    //       console.log("testValue: " + testValue);
-    //     } catch (e) {
-    //       errors.push("'value' invalid";
-    //     }
-    //   }
-    // }
+    try {
+      const from = ethers.utils.getAddress(data.from);
+      console.log("from: " + from);
+    } catch (e) {
+      errors.push("'from' invalid");
+    }
+    // `to` must be specified, but can be null, "", or "0x" for contract deployments
+    if (!('to' in data)) {
+      errors.push("'to' missing");
+    } else {
+      if (data.to && data.to != "" && data.to != "0x") {
+        try {
+          const to = ethers.utils.getAddress(data.to);
+          console.log("to: " + to);
+        } catch (e) {
+          errors.push("'to' invalid");
+        }
+      }
+    }
+    if (!('value' in data)) {
+      errors.push("'value' missing");
+    } else {
+      try {
+        const value = ethers.BigNumber.from(data.value);
+        console.log("value: " + value);
+      } catch (e) {
+        errors.push("'value' invalid");
+      }
+    }
 
     // {
     //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
@@ -185,40 +182,45 @@ function testIt() {
     //   "address": "0x720169E755Ba14017DF473d9D10e682E1e41395", // Too short
     // },
 
-    {
-      "address": "720169e755ba14017df473d9d10e682e1e41395a",
-      "id": "b4969a37-2d49-4190-bdb5-1987b2f02c21",
-      "version": 3,
-      "crypto": {
-        "cipher": "aes-128-ctr",
-        "cipherparams": {
-          "iv": "adb90f4d486c314e2ec08efbb5f3acac"
-        },
-        "ciphertext": "94e241c724d6eeabe900c4d400fee4d504c622e8b1f4432e75fe4dc261fcb05f",
-        "kdf": "scrypt",
-        "kdfparams": {
-          "salt": "fab44d0fe773999496d90a135fe2e5b5c6aef8aee67451c6de5e0efa9076f0e3",
-          "n": 131072,
-          "dklen": 32,
-          "p": 1,
-          "r": 8
-        },
-        "mac": "d4c16a7003d98d2d8f5962181f8c81a1b2d01f9a8c11553e886919967a3d02da"
-      },
-    },
-
     // {
-    //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //   "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //   "value": "1000000000000000000",
-    //   "data": "0x",
-    //   // "type": 1,
-    //   "chainId": 1,
-    //   "nonce": 1,
-    //   "gasLimit": "1",
-    //   "gasPrice": "1000000000",
-    //   "accessList": [],
+    //   "address": "720169e755ba14017df473d9d10e682e1e41395a",
+    //   "id": "b4969a37-2d49-4190-bdb5-1987b2f02c21",
+    //   "version": 3,
+    //   "crypto": {
+    //     "cipher": "aes-128-ctr",
+    //     "cipherparams": {
+    //       "iv": "adb90f4d486c314e2ec08efbb5f3acac"
+    //     },
+    //     "ciphertext": "94e241c724d6eeabe900c4d400fee4d504c622e8b1f4432e75fe4dc261fcb05f",
+    //     "kdf": "scrypt",
+    //     "kdfparams": {
+    //       "salt": "fab44d0fe773999496d90a135fe2e5b5c6aef8aee67451c6de5e0efa9076f0e3",
+    //       "n": 131072,
+    //       "dklen": 32,
+    //       "p": 1,
+    //       "r": 8
+    //     },
+    //     "mac": "d4c16a7003d98d2d8f5962181f8c81a1b2d01f9a8c11553e886919967a3d02da"
+    //   },
     // },
+
+    {
+      "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+      "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+      // "to": "",
+      // "to": "0x",
+      // "value": "1000000000000000000",
+      "value": "0x1000000000000000000",
+      // "value": null,
+      // "value": "",
+      "data": "0x",
+      // "type": 1,
+      "chainId": 1,
+      "nonce": 1,
+      "gasLimit": "1",
+      "gasPrice": "1000000000",
+      "accessList": [],
+    },
 
     // {
     //    "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
