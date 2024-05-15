@@ -135,6 +135,23 @@ function checkData(data) {
         errors.push("'value' invalid");
       }
     }
+    if (!('data' in data)) {
+      errors.push("'data' missing");
+    } else {
+      if (data.data && data.data != "" && data.data != "0x") {
+        console.log("data: " + data.data);
+      } else {
+        if (!data.to || data.to == "" || data.to == "0x") {
+          errors.push("'data' and/or 'to' must be specified");
+        }
+      }
+      // try {
+      //   const value = ethers.BigNumber.from(data.value);
+      //   console.log("value: " + value);
+      // } catch (e) {
+      //   errors.push("'value' invalid");
+      // }
+    }
 
     // {
     //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
@@ -206,11 +223,11 @@ function testIt() {
 
     {
       "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-      "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-      // "to": "",
+      // "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+      "to": "",
       // "to": "0x",
-      // "value": "1000000000000000000",
-      "value": "0x1000000000000000000",
+      "value": "1000000000000000000",
+      // "value": "0x1000000000000000000",
       // "value": null,
       // "value": "",
       "data": "0x",
