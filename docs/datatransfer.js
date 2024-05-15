@@ -216,6 +216,13 @@ function checkData(data) {
     }
   }
   if (["signedtype2"].includes(type)) {
+    if (!('hash' in data)) {
+      errors.push("'hash' missing");
+    } else {
+      if (!data.hash.match(/^0x[0-9a-f]{64}$/i)) {
+        errors.push("'hash' invalid");
+      }
+    }
     if (!('v' in data)) {
       errors.push("'v' missing");
     } else {
@@ -348,6 +355,8 @@ function testIt() {
       "gasPrice": null,
       "accessList": [],
       "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
+      // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9cef",
+      // "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9c",
       "v": 1,
       // "v": "1a",
       // "v": null,
