@@ -229,24 +229,16 @@ function checkData(data) {
     if (!('r' in data)) {
       errors.push("'r' missing");
     } else {
-      try {
-        console.log("r: " + data.r);
-        if (!data.r.match(/^0x[0-9a-f]{64}$/i)) {
-          errors.push("'r' invalid");
-        }
-      } catch (e) {
+      console.log("r: " + data.r);
+      if (!data.r.match(/^0x[0-9a-f]{64}$/i)) {
         errors.push("'r' invalid");
       }
     }
     if (!('s' in data)) {
       errors.push("'s' missing");
     } else {
-      try {
-        console.log("s: " + data.s);
-        if (!data.s.match(/^0x[0-9a-f]{64}$/i)) {
-          errors.push("'s' invalid");
-        }
-      } catch (e) {
+      console.log("s: " + data.s);
+      if (!data.s.match(/^0x[0-9a-f]{64}$/i)) {
         errors.push("'s' invalid");
       }
     }
