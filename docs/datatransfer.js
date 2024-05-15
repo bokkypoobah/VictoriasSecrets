@@ -214,7 +214,42 @@ function checkData(data) {
         errors.push("'maxPriorityFeePerGas' invalid");
       }
     }
-
+  }
+  if (["signedtype2"].includes(type)) {
+    if (!('v' in data)) {
+      errors.push("'v' missing");
+    } else {
+      try {
+        const v = ethers.BigNumber.from(data.v);
+        console.log("v: " + v);
+      } catch (e) {
+        errors.push("'v' invalid");
+      }
+    }
+    if (!('r' in data)) {
+      errors.push("'r' missing");
+    } else {
+      try {
+        console.log("r: " + data.r);
+        if (!data.r.match(/^0x[0-9a-f]{64}$/i)) {
+          errors.push("'r' invalid");
+        }
+      } catch (e) {
+        errors.push("'r' invalid");
+      }
+    }
+    if (!('s' in data)) {
+      errors.push("'s' missing");
+    } else {
+      try {
+        console.log("s: " + data.s);
+        if (!data.s.match(/^0x[0-9a-f]{64}$/i)) {
+          errors.push("'s' invalid");
+        }
+      } catch (e) {
+        errors.push("'s' invalid");
+      }
+    }
   }
 
   console.log("checkData - type: " + type + ", errors: " + errors.join("; "));
@@ -270,61 +305,66 @@ function testIt() {
     //   },
     // },
 
-    {
-      "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-      "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-      "value": "1000000000000000000",
-      // "data": "0x",
-      "data": "0xa9059cbb000000000000000000000000a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
-      // "data": "0xa9059cbb000000000000000000000000aa2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
-      // "data": "0xa9059cbb000000000000000000000001a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
-      "type": 2,
-      // "type": null,
-      // "type": "",
-      // "type": 1,
-      "chainId": 1,
-      // "chainId": "1a",
-      // "chainId": null,
-      // "chainId": "",
-      "nonce": 1,
-      // "nonce": "1a",
-      // "nonce": null,
-      // "nonce": "",
-      "gasLimit": "1",
-      // "gasLimit": "1a",
-      // "gasLimit": null,
-      // "gasLimit": "",
-      "maxFeePerGas": "1000000000",
-      // "maxFeePerGas": "1000000000b",
-      // "maxFeePerGas": "0x1000000000b",
-      // "maxFeePerGas": null,
-      // "maxFeePerGas": "",
-      "maxPriorityFeePerGas": "1000000000",
-      // "maxPriorityFeePerGas": "1000000000a",
-      // "maxPriorityFeePerGas": null,
-      // "maxPriorityFeePerGas": "",
-      "gasPrice": null,
-      "accessList": [],
-    },
-
     // {
     //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
     //   "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
     //   "value": "1000000000000000000",
-    //   "data": "0x",
+    //   // "data": "0x",
+    //   "data": "0xa9059cbb000000000000000000000000a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
+    //   // "data": "0xa9059cbb000000000000000000000000aa2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
+    //   // "data": "0xa9059cbb000000000000000000000001a2113f1e9a66c3b0a75bb466bbbfeeec987ac92e000000000000000000000000000000000000000000000000000000000079dc1f",
     //   "type": 2,
+    //   // "type": null,
+    //   // "type": "",
+    //   // "type": 1,
     //   "chainId": 1,
+    //   // "chainId": "1a",
+    //   // "chainId": null,
+    //   // "chainId": "",
     //   "nonce": 1,
+    //   // "nonce": "1a",
+    //   // "nonce": null,
+    //   // "nonce": "",
     //   "gasLimit": "1",
+    //   // "gasLimit": "1a",
+    //   // "gasLimit": null,
+    //   // "gasLimit": "",
     //   "maxFeePerGas": "1000000000",
+    //   // "maxFeePerGas": "1000000000b",
+    //   // "maxFeePerGas": "0x1000000000b",
+    //   // "maxFeePerGas": null,
+    //   // "maxFeePerGas": "",
     //   "maxPriorityFeePerGas": "1000000000",
+    //   // "maxPriorityFeePerGas": "1000000000a",
+    //   // "maxPriorityFeePerGas": null,
+    //   // "maxPriorityFeePerGas": "",
     //   "gasPrice": null,
     //   "accessList": [],
-    //   "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
-    //   "v": 1,
-    //   "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d8",
-    //   "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72",
     // },
+
+    {
+      "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+      "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
+      "value": "1000000000000000000",
+      "data": "0x",
+      "type": 2,
+      "chainId": 1,
+      "nonce": 1,
+      "gasLimit": "1",
+      "maxFeePerGas": "1000000000",
+      "maxPriorityFeePerGas": "1000000000",
+      "gasPrice": null,
+      "accessList": [],
+      "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
+      "v": 1,
+      // "v": "1a",
+      // "v": null,
+      // "v": "",
+      "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d8",
+      // "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d",
+      "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72",
+      // "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72e",
+    },
 
   ];
 
