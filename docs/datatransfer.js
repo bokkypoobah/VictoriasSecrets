@@ -31,16 +31,10 @@ function dataType(data) {
         } else {
           return "unsignedtype2";
         }
-      } else {
-        if ('r' in data) {
-          return "signedtype1";
-        } else {
-          return "unsignedtype1";
-        }
       }
     }
   }
-  return "unknown";
+  return "notsupported";
 }
 
 function checkData(data) {
@@ -105,7 +99,7 @@ function checkData(data) {
       }
     }
   }
-  if (["signedtype1", "unsignedtype1", "signedtype2", "unsignedtype2"].includes(type)) {
+  if (["signedtype2", "unsignedtype2"].includes(type)) {
     try {
       const from = ethers.utils.getAddress(data.from);
       console.log("from: " + from);
@@ -146,19 +140,29 @@ function checkData(data) {
         }
       }
     }
-
-    // {
-    //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //   "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //   "value": "1000000000000000000",
-    //   "data": "0x",
-    //   // "type": 1,
-    //   "chainId": 1,
-    //   "nonce": 1,
-    //   "gasLimit": "1",
-    //   "gasPrice": "1000000000",
-    //   "accessList": [],
-    // },
+    if (!('type' in data)) {
+      errors.push("'type' missing");
+    } else {
+      try {
+        const type = ethers.BigNumber.from(data.type);
+        console.log("type: " + type);
+        if (type != 2) {
+          errors.push("Only type 2 supported");
+        }
+      } catch (e) {
+        errors.push("'type' invalid");
+      }
+    }
+    if (!('chainId' in data)) {
+      errors.push("'chainId' missing");
+    } else {
+      try {
+        const chainId = ethers.BigNumber.from(data.chainId);
+        console.log("chainId: " + chainId);
+      } catch (e) {
+        errors.push("'chainId' invalid");
+      }
+    }
 
   }
 
@@ -217,53 +221,23 @@ function testIt() {
 
     {
       "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-      // "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-      "to": "",
-      // "to": "0x",
+      "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
       "value": "1000000000000000000",
-      // "value": "0x1000000000000000000",
-      // "value": null,
-      // "value": "",
       "data": "0x",
+      "type": 2,
+      // "type": null,
+      // "type": "",
       // "type": 1,
       "chainId": 1,
+      // "chainId": null,
+      // "chainId": "",
       "nonce": 1,
       "gasLimit": "1",
-      "gasPrice": "1000000000",
+      "maxPriorityFeePerGas": "1000000000",
+      "maxFeePerGas": "1000000000",
+      "gasPrice": null,
       "accessList": [],
     },
-
-    // {
-    //    "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //    "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //    "value": "1000000000000000000",
-    //    "data": "0x",
-    //    // "type": 1,
-    //    "chainId": 1,
-    //    "nonce": 1,
-    //    "gasLimit": "1",
-    //    "gasPrice": "1000000000",
-    //    "accessList": [],
-    //    "hash": "0x6aa502ae42111476faff7ad21ca7428e91de9f8050d2d8616eb870a811e1f9ce",
-    //    "v": 1,
-    //    "r": "0x02fa15d6d25494980949fa657019e0ad2bfae0ba15deb071a5857db2626988d8",
-    //    "s": "0x45c5f68151ac0ee1ada671a365104b01e4028d3cfa24bdb6f4c767efb8f15f72",
-    //  },
-
-    // {
-    //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //   "to": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
-    //   "value": "1000000000000000000",
-    //   "data": "0x",
-    //   "type": 2,
-    //   "chainId": 1,
-    //   "nonce": 1,
-    //   "gasLimit": "1",
-    //   "maxPriorityFeePerGas": "1000000000",
-    //   "maxFeePerGas": "1000000000",
-    //   "gasPrice": null,
-    //   "accessList": [],
-    // },
 
     // {
     //   "from": "0x4a7075B7D7E0bB80e8e6A0Fcf4fB6E1f33963F6B",
