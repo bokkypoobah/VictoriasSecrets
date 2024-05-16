@@ -314,6 +314,18 @@
                       </div>
                     </div>
                   </b-form-group>
+                  <b-form-group label="" label-for="prepare-qrcode" label-size="sm" label-cols-sm="3" label-align-sm="right" :state="!prepare.error" :invalid-feedback="prepare.error" class="mx-0 my-1 p-0">
+                    <!-- <b-button size="sm" :disabled="Object.keys(errors).length > 0" id="prepare-qrcode" @click="prepareDownload()" variant="primary">Download .JSON</b-button> -->
+
+                    <!-- <qrcode-vue v-if="qrCode && qrCode.data" :value="qrCode.data" size="600" class="text-center"></qrcode-vue> -->
+                    <qrcode-vue :value="JSON.stringify(tx, null, 2)" size="300" class="text-left"></qrcode-vue>
+                    <pre>
+                      <font size="-2">
+{{ tx }}
+                      </font>
+                    </pre>
+
+                  </b-form-group>
                   <b-form-group label="" label-for="prepare-download" label-size="sm" label-cols-sm="3" label-align-sm="right" :state="!prepare.error" :invalid-feedback="prepare.error" class="mx-0 my-1 p-0">
                     <b-button size="sm" :disabled="Object.keys(errors).length > 0" id="prepare-download" @click="prepareDownload()" variant="primary">Download .JSON</b-button>
                   </b-form-group>
@@ -414,6 +426,7 @@
     </div>
 
     <script>
+      Vue.component('qrcode-vue', QrcodeVue);
       window.app = new Vue({
         el: '#app',
         // --- DATA ---

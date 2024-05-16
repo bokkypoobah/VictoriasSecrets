@@ -60,7 +60,7 @@ async function dataToTx(data, amountUnit, gasUnit, provider) {
     tx = {
       from,
       to,
-      value,
+      value: value.toString(),
       data: null,
       chainId: data.chainId,
       nonce: data.nonce,
@@ -113,12 +113,12 @@ async function dataToTx(data, amountUnit, gasUnit, provider) {
     }
 
     if (data.maxFeePerGas) {
-      tx.maxFeePerGas = ethers.utils.parseUnits(data.maxFeePerGas, gasUnit);
+      tx.maxFeePerGas = ethers.utils.parseUnits(data.maxFeePerGas, gasUnit).toString();
     } else {
       errors.complete = false;
     }
     if (data.maxPriorityFeePerGas) {
-      tx.maxPriorityFeePerGas = ethers.utils.parseUnits(data.maxPriorityFeePerGas, gasUnit);
+      tx.maxPriorityFeePerGas = ethers.utils.parseUnits(data.maxPriorityFeePerGas, gasUnit).toString();
     } else {
       errors.complete = false;
     }

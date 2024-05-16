@@ -25,7 +25,7 @@ function dataType(data) {
         return "address";
       }
     } else if ('from' in data) {
-      if (('type' in data) && data.type == "2") {
+      if (('type' in data) && parseInt(data.type) == 2) {
         if ('r' in data) {
           return "signedtype2";
         } else {
