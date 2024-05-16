@@ -318,7 +318,7 @@
                     <!-- <b-button size="sm" :disabled="Object.keys(errors).length > 0" id="prepare-qrcode" @click="prepareDownload()" variant="primary">Download .JSON</b-button> -->
 
                     <!-- <qrcode-vue v-if="qrCode && qrCode.data" :value="qrCode.data" size="600" class="text-center"></qrcode-vue> -->
-                    <qrcode-vue :value="JSON.stringify(tx, null, 2)" size="300" class="text-left"></qrcode-vue>
+                    <qrcode-vue v-if="Object.keys(tx).length > 0" :value="JSON.stringify(tx, null, 2)" size="300" class="text-left"></qrcode-vue>
                     <pre>
                       <font size="-2">
 {{ tx }}

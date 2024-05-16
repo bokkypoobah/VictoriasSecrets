@@ -62,8 +62,8 @@ async function dataToTx(data, amountUnit, gasUnit, provider) {
       to,
       value: value.toString(),
       data: null,
-      chainId: data.chainId,
-      nonce: data.nonce,
+      chainId: parseInt(data.chainId),
+      nonce: parseInt(data.nonce),
       accessList: [],
     };
 
@@ -81,8 +81,8 @@ async function dataToTx(data, amountUnit, gasUnit, provider) {
           to: data.token,
           value: 0,
           data: tokenData && tokenData.data || null,
-          chainId: data.chainId,
-          nonce: data.nonce,
+          chainId: parseInt(data.chainId),
+          nonce: parseInt(data.nonce),
           accessList: [],
         };
       } catch (e) {
@@ -104,7 +104,7 @@ async function dataToTx(data, amountUnit, gasUnit, provider) {
         if (data.gasLimit < estimatedGas) {
           errors.gasLimit = "Warning: < estimatedGas: " + estimatedGas;
         }
-        tx.gasLimit = data.gasLimit;
+        tx.gasLimit = parseInt(data.gasLimit);
       } catch (e) {
         errors.gasLimit = "Error estimateGas()";
       }
